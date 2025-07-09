@@ -19,7 +19,7 @@ while True:
         message = s.recv(1024).decode("utf-8")
              
         if message  != "":
-            #print(message)
+            print(message)
             end = time.time()
             elapsed = end-start
             if elapsed > 0:
