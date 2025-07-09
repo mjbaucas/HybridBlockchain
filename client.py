@@ -24,7 +24,7 @@ while True:
             message = json.loads(message)
             print(message["response"]) 
             if message["response"] == "challenge":
-                response = message[2][message[1]]
+                response = message["challenge"][message["row_address"]]
                 s.sendall(bytes(response, "utf-8"))
                 message = s.recv(1024).decode("utf-8")
             print(message)
