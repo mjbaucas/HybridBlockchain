@@ -21,9 +21,9 @@ while True:
              
         if message != "":
             #print(message)
-            #message = json.loads(message)
-            print(message[0]) 
-            if message[0] == "challenge":
+            message = json.loads(message)
+            print(message["response"]) 
+            if message["response"] == "challenge":
                 response = message[2][message[1]]
                 s.sendall(bytes(response, "utf-8"))
                 message = s.recv(1024).decode("utf-8")

@@ -1,6 +1,7 @@
 import socket
 import time
 import sys
+import json
 from blockchain.private import Chain as PrivateBlockchain
 from blockchain.public import Chain as PublicBlockchain
 from sram import read_sram
@@ -81,12 +82,12 @@ while True:
         
         print(verify_account(message.decode("utf-8"), priv_chain, pub_chain))
         if verify_account(message.decode("utf-8"), priv_chain, pub_chain):
-            response = ["access granted"]
+            response = json.dumps({"response": "access granted"})
             connection.sendall(bytes(str(response), "utf-8"))
         else:
             sram_address = "100"
             row_address = 1
-            response = ["challenge", row_address, sram_data[sram_address]]
+            response = json.dumps({"response": "challenge", "row_address": row_address, "challenge": sram_data[sram_address]})
             connection.sendall(bytes(str(response), "utf-8"))
             message = connection.recv(1024)
             print(message)
