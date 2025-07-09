@@ -79,9 +79,10 @@ while True:
         message = connection.recv(1024)
         response =""
         
-        if verify_account(message.decode("utf-8")):
+        print(verify_account(message.decode("utf-8"), priv_chain, pub_chain))
+        if verify_account(message.decode("utf-8"), priv_chain, pub_chain):
             response = ["access granted"]
-            connection.sendall(bytes(response, "utf-8"))
+            connection.sendall(bytes(str(response), "utf-8"))
         else:
             sram_address = "100"
             row_address = 1
@@ -91,7 +92,7 @@ while True:
                 response = ["access granted"]          
             else:
                 response = ["access rejected"]
-
+            connection.sendall(bytes(str(response), "utf-8"))
         counter+=1
         if counter >= len(ip_addresses):
             counter = 0

@@ -17,15 +17,7 @@ while True:
         s.connect(("10.12.203.76", 5000))
         s.sendall(bytes('device001', "utf-8"))
         message = s.recv(1024).decode("utf-8")
-        message = json.loads(message)       
-
-        if message[0] == "challenge":
-            response = message[2][message[1]]
-            s.sendall(bytes(response, "utf-8"))
-            message = s.recv(1024).decode("utf-8")
-            print(message)
-            reset = 0
-        
+             
         if message  != "":
             #print(message)
             end = time.time()
@@ -34,6 +26,12 @@ while True:
                 print(elapsed)
             reset = 1
         else:
+            message = json.loads(message)  
+            if message[0] == "challenge":
+                response = message[2][message[1]]
+                s.sendall(bytes(response, "utf-8"))
+                message = s.recv(1024).decode("utf-8")
+            print(message)
             reset = 0
         s.close()
     except Exception as msg:
