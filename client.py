@@ -19,14 +19,15 @@ while True:
         s.sendall(bytes('device002', "utf-8"))
         message = s.recv(1024).decode("utf-8")
              
-        if message  != "":
+        if message != "":
             message = json.loads(message) 
+            print(message)
             if message[0] == "challenge":
                 response = message[2][message[1]]
                 s.sendall(bytes(response, "utf-8"))
                 message = s.recv(1024).decode("utf-8")
             print(message)
-            
+
             end = time.time()
             elapsed = end-start
             if elapsed > 0:
