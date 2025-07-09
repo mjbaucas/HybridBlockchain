@@ -20,8 +20,8 @@ while True:
         message = s.recv(1024).decode("utf-8")
              
         if message != "":
-            message = json.loads(message) 
             print(message)
+            message = json.loads(message) 
             if message[0] == "challenge":
                 response = message[2][message[1]]
                 s.sendall(bytes(response, "utf-8"))
