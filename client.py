@@ -15,7 +15,8 @@ while True:
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect(("10.12.203.76", 5000))
-        s.sendall(bytes('device001', "utf-8"))
+        #s.sendall(bytes('device001', "utf-8"))
+        s.sendall(bytes('device002', "utf-8"))
         message = s.recv(1024).decode("utf-8")
              
         if message  != "":
