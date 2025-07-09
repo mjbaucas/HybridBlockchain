@@ -27,7 +27,8 @@ while True:
                 print(elapsed)
             reset = 1
         else:
-            message = json.loads(message)  
+            message = json.loads(message) 
+            print(message[0]) 
             if message[0] == "challenge":
                 response = message[2][message[1]]
                 s.sendall(bytes(response, "utf-8"))

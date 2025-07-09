@@ -87,8 +87,10 @@ while True:
             sram_address = "100"
             row_address = 1
             response = ["challenge", row_address, sram_data[sram_address]]
+            connection.sendall(bytes(str(response), "utf-8"))
             message = connection.recv(1024)
-            if sram_data[address][row_address] == message.decode("utf-8"):
+            print(message)
+            if sram_data[sram_address][row_address] == message.decode("utf-8"):
                 response = ["access granted"]          
             else:
                 response = ["access rejected"]
