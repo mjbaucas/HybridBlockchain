@@ -20,20 +20,19 @@ while True:
         message = s.recv(1024).decode("utf-8")
              
         if message  != "":
+            message = json.loads(message) 
+            if message[0] == "challenge":
+                response = message[2][message[1]]
+                s.sendall(bytes(response, "utf-8"))
+                message = s.recv(1024).decode("utf-8")
             print(message)
+            
             end = time.time()
             elapsed = end-start
             if elapsed > 0:
                 print(elapsed)
             reset = 1
         else:
-            message = json.loads(message) 
-            print(message[0]) 
-            if message[0] == "challenge":
-                response = message[2][message[1]]
-                s.sendall(bytes(response, "utf-8"))
-                message = s.recv(1024).decode("utf-8")
-            print(message)
             reset = 0
         s.close()
     except Exception as msg:
