@@ -5,7 +5,6 @@ from blockchain.public import Chain as PublicBlockchain
 import json
 
 pub_chain = PublicBlockchain(4)
-mode = sys.argv[1]
 
 reset = 1
 start = 0
