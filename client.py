@@ -10,12 +10,12 @@ mode = sys.argv[1]
 reset = 1
 start = 0
 while True:
-	if reset == 1:
-		start = time.time()
-		reset = 0
-	try:
-		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		s.connect(("10.12.204.103", 5000))
+    if reset == 1:
+        start = time.time()
+        reset = 0
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect(("10.12.203.76", 5000))
         s.sendall(bytes('device001', "utf-8"))
         message = s.recv(1024).decode("utf-8")
         message = json.loads(message)       
@@ -26,17 +26,17 @@ while True:
             message = s.recv(1024).decode("utf-8")
             print(message)
             reset = 0
-		
+        
         if message  != "":
-			#print(message)
-			end = time.time()
-			elapsed = end-start
-			if elapsed > 0:
-				print(elapsed)
-			reset = 1
-		else:
-			reset = 0
-		s.close()
-	except Exception as msg:
-		print(msg)
-		reset = 0
+            #print(message)
+            end = time.time()
+            elapsed = end-start
+            if elapsed > 0:
+                print(elapsed)
+            reset = 1
+        else:
+            reset = 0
+        s.close()
+    except Exception as msg:
+        print(msg)
+        reset = 0
