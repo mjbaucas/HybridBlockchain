@@ -46,4 +46,4 @@ while counter < 100:
         s.close()
     except Exception as msg:
         print(msg)
-        reset = 0
+        reset = 1

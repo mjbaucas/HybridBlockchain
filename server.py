@@ -7,7 +7,8 @@ from blockchain.public import Chain as PublicBlockchain
 from sram import read_sram
 
 ip_addresses = [
-    "192.168.137.102"
+    "192.168.137.102",
+    "192.168.137.43"
 ]
 
 sram_data = read_sram('test_sram_data.txt')
