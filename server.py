@@ -67,6 +67,15 @@ def verify_account(device_id, priv_chain, pub_chain):
 
     return found
 
+def verify_account_priv(device_id, priv_chain):
+    private_results = priv_chain.search_ledger(device_id)
+    return (True if private_results == [] else False) 
+
+def verify_account_public(device_id, pub_chain):
+    public_results = pub_chain.search_ledger(device_id)
+    return (True if public_results == [] else False) 
+
+
 counter = 0
 while True:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -80,22 +89,46 @@ while True:
         message = connection.recv(1024)
         response =""
         
-        print(verify_account(message.decode("utf-8"), priv_chain, pub_chain))
-        if verify_account(message.decode("utf-8"), priv_chain, pub_chain):
-            response = json.dumps({"response": "access granted"})
-            connection.sendall(bytes(str(response), "utf-8"))
-        else:
-            sram_address = "100"
-            row_address = 1
-            response = json.dumps({"response": "challenge", "row_address": row_address, "challenge": sram_data[sram_address]})
-            connection.sendall(bytes(str(response), "utf-8"))
-            message = connection.recv(1024)
-            print(message)
-            if sram_data[sram_address][row_address] == message.decode("utf-8"):
-                response = ["access granted"]          
+        if sys.argv[1] == 0: # Private Only 
+            if verify_account_priv(message.decode("utf-8"), priv_chain):
+                response = json.dumps({"response": "access granted"})
+                connection.sendall(bytes(str(response), "utf-8"))    
+            else: 
+                response = json.dumps({"response": "access rejected"})
+                connection.sendall(bytes(str(response), "utf-8"))  
+        elif sys.argv[1] == 1: # Public Only
+            if verify_account_public(message.decode("utf-8"), pub_chain):
+                response = json.dumps({"response": "access granted"})
+                connection.sendall(bytes(str(response), "utf-8"))    
+            else: 
+                sram_address = "100"
+                row_address = 1
+                response = json.dumps({"response": "challenge", "row_address": row_address, "challenge": sram_data[sram_address]})
+                connection.sendall(bytes(str(response), "utf-8"))
+                message = connection.recv(1024)
+                print(message)
+                if sram_data[sram_address][row_address] == message.decode("utf-8"):
+                    response = ["access granted"]          
+                else:
+                    response = ["access rejected"]
+                connection.sendall(bytes(str(response), "utf-8"))
+        else: # Private Public Hybrid
+            print(verify_account(message.decode("utf-8"), priv_chain, pub_chain))
+            if verify_account(message.decode("utf-8"), priv_chain, pub_chain):
+                response = json.dumps({"response": "access granted"})
+                connection.sendall(bytes(str(response), "utf-8"))
             else:
-                response = ["access rejected"]
-            connection.sendall(bytes(str(response), "utf-8"))
+                sram_address = "100"
+                row_address = 1
+                response = json.dumps({"response": "challenge", "row_address": row_address, "challenge": sram_data[sram_address]})
+                connection.sendall(bytes(str(response), "utf-8"))
+                message = connection.recv(1024)
+                print(message)
+                if sram_data[sram_address][row_address] == message.decode("utf-8"):
+                    response = ["access granted"]          
+                else:
+                    response = ["access rejected"]
+                connection.sendall(bytes(str(response), "utf-8"))
         counter+=1
         if counter >= len(ip_addresses):
             counter = 0

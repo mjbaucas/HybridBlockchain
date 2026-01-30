@@ -8,7 +8,9 @@ pub_chain = PublicBlockchain(4)
 
 reset = 1
 start = 0
-while True:
+total = 0
+counter = 0
+while counter < 100:
     if reset == 1:
         start = time.time()
         reset = 0
@@ -32,7 +34,9 @@ while True:
             end = time.time()
             elapsed = end-start
             if elapsed > 0:
-                print(elapsed)
+                total += elapsed
+                counter += 1
+                print(total/counter)
             reset = 1
         else:
             reset = 0
