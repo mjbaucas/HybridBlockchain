@@ -60,11 +60,12 @@ def verify_account(device_id, priv_chain, pub_chain):
 
 def verify_account_priv(device_id, priv_chain):
     private_results = priv_chain.search_ledger(device_id)
-    return (True if private_results == [] else False) 
+    print(private_results)
+    return (False if private_results == [] else True) 
 
 def verify_account_public(device_id, pub_chain):
     public_results = pub_chain.search_ledger(device_id)
-    return (True if public_results == [] else False) 
+    return (False if public_results == [] else True) 
 
 
 counter = 0
@@ -80,14 +81,14 @@ while True:
         message = connection.recv(1024)
         response =""
         
-        if sys.argv[1] == 0: # Private Only 
+        if sys.argv[1] == '0': # Private Only 
             if verify_account_priv(message.decode("utf-8"), priv_chain):
                 response = json.dumps({"response": "access granted"})
                 connection.sendall(bytes(str(response), "utf-8"))    
             else: 
                 response = json.dumps({"response": "access rejected"})
                 connection.sendall(bytes(str(response), "utf-8"))  
-        elif sys.argv[1] == 1: # Public Only
+        elif sys.argv[1] == '1': # Public Only
             if verify_account_public(message.decode("utf-8"), pub_chain):
                 response = json.dumps({"response": "access granted"})
                 connection.sendall(bytes(str(response), "utf-8"))    

@@ -36,6 +36,9 @@ while counter < 100:
             if elapsed > 0:
                 total += elapsed
                 counter += 1
+                print(elapsed)
+                print(total)
+                print(counter)
                 print(total/counter)
             reset = 1
         else:
