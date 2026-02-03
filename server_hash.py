@@ -94,6 +94,7 @@ while True:
                 connection.sendall(bytes(str(response), "utf-8"))
                 message = connection.recv(1024)
                 print(message)
+                print(pub_chain.gen_block)
                 if pub_chain.verify_proof(pub_chain.gen_block, message.decode("utf-8")):
                     response = ["access granted"]          
                 else:
