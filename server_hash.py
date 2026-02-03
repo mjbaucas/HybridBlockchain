@@ -43,7 +43,7 @@ public_trusted_list = records_public.copy()
 pub_chain.gen_next_block("0", public_trusted_list)
 proof = pub_chain.proof_of_work(pub_chain.gen_block)
 
-def verify_account(device_id, priv_chain, pub_chain, proof):
+def verify_account(device_id, priv_chain, pub_chain):
     private_results = priv_chain.search_ledger(device_id)
     public_results = pub_chain.search_ledger(device_id)
 
@@ -51,8 +51,8 @@ def verify_account(device_id, priv_chain, pub_chain, proof):
     found = False
     for private_result in private_results:
         for public_result in public_results:
-            found = pub_chain.verify_proof(pub_chain.gen_block, proof)
-
+            found = True
+        
     return found
 
 def verify_account_priv(device_id, priv_chain):
