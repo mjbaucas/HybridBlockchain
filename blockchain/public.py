@@ -24,6 +24,8 @@ class Chain:
         return computed_hash
 
     def verify_proof(self, block, proof):
+        print(block.compute_hash())
+        print(proof)
         return (proof.startswith('0' * self.difficulty) and proof == block.compute_hash())
 
     def output_ledger(self):
@@ -51,4 +53,4 @@ def gen_genesis_block():
         }
     ]
 
-    return Block(0, datetime.datetime.now(), transaction, "0", "0")
+    return Block(0, 0, transaction, "0", "0")
