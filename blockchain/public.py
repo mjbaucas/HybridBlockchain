@@ -47,8 +47,6 @@ def gen_genesis_block():
     transaction = [
         {
             "ID": "default", 
-            "challenge": ['xxxxxxxx'],
-            "sram_address": "0",
             "timestamp": "0"
         }
     ]
