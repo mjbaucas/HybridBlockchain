@@ -6,12 +6,13 @@ import json
 
 pub_chain = PublicBlockchain(4)
 
-reset = 1
-start = 0
-total = 0
-counter = 0
+
 averages = []
 for i in range(3):
+    reset = 1
+    start = 0
+    total = 0
+    counter = 0
     while counter < 100:
         if reset == 1:
             start = time.time()
