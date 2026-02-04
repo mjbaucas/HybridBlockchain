@@ -13,7 +13,7 @@ for i in range(3):
     start = 0
     total = 0
     counter = 0
-    while counter < 30:
+    while counter < 10:
         if reset == 1:
             start = time.time()
             reset = 0
@@ -44,7 +44,7 @@ for i in range(3):
                     print(total)
                     print(counter)
                     print(total/counter)
-                    if counter == 100:
+                    if counter == 10:
                         averages.append(total/counter)
                 reset = 1
             else:
