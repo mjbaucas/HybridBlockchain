@@ -13,7 +13,7 @@ for i in range(3):
     start = 0
     total = 0
     counter = 0
-    while counter < 100:
+    while counter < 30:
         if reset == 1:
             start = time.time()
             reset = 0
