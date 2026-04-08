@@ -7,13 +7,15 @@ from blockchain.public import Chain as PublicBlockchain
 
 ip_addresses = [
     "192.168.137.110",
-    #"192.168.137.102",
-    #"192.168.137.43",
-    #"192.168.137.175",
-    #"192.168.137.246",
+    "192.168.137.175",
+    "192.168.137.102",
+    "192.168.137.223",
+    "192.168.137.43",
+    "192.168.137.137",
+    "192.168.137.64",
+    "192.168.137.246",
+    
     #"192.168.137.26",
-    #"192.168.137.137",
-    #"192.168.137.64"
 ]
 
 records_private = [
@@ -117,24 +119,26 @@ while True:
                 connection.sendall(bytes(str(response), "utf-8"))
         elif sys.argv[1] == '3': # Sessioned Hybrid
             print(verify_account(message.decode("utf-8"), priv_chain, pub_chain))
+            print(records_session)
+            device_address = address[0]
             if verify_account(message.decode("utf-8"), priv_chain, pub_chain):
                 response = json.dumps({"response": "access granted"})
                 connection.sendall(bytes(str(response), "utf-8"))
             else:
-                if address in records_session:
-                    if records_session[address] > 0:
+                if device_address in records_session:
+                    if records_session[device_address] > 0:
                         response = json.dumps({"response": "access granted"})
                         connection.sendall(bytes(str(response), "utf-8")) 
-                        records_session[address]-=1
-                        if records_session[address] == 0:
-                            records_session.pop(address)
+                        records_session[device_address]-=1
+                        if records_session[device_address] == 0:
+                            records_session.pop(device_address)
                     else:    
                         response = json.dumps({"response": "proof"})
                         connection.sendall(bytes(str(response), "utf-8"))
                         message = connection.recv(1024)
                         if pub_chain.verify_proof(pub_chain.gen_block, message.decode("utf-8")):
                             response = ["access granted"]     
-                            records_session[address] = 9     
+                            records_session[device_address] = 9     
                         else:
                             response = ["access rejected"]
                         connection.sendall(bytes(str(response), "utf-8"))
@@ -144,7 +148,7 @@ while True:
                     message = connection.recv(1024)
                     if pub_chain.verify_proof(pub_chain.gen_block, message.decode("utf-8")):
                         response = ["access granted"]   
-                        records_session[address] = 9        
+                        records_session[device_address] = 9        
                     else:
                         response = ["access rejected"]
                     connection.sendall(bytes(str(response), "utf-8"))

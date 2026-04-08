@@ -8,11 +8,13 @@ pub_chain = PublicBlockchain(4)
 
 
 averages = []
+reset_counts = []
 for i in range(3):
     reset = 1
     start = 0
     total = 0
     counter = 0
+    reset_count = 0
     while counter < 10:
         if reset == 1:
             start = time.time()
@@ -53,4 +55,9 @@ for i in range(3):
         except Exception as msg:
             print(msg)
             reset = 0
+        
+        if reset = 0:
+            reset_count += 1
+    reset_counts.append(reset_count)
 print(averages)
+print(reset_counts)
