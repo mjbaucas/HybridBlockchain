@@ -55,9 +55,8 @@ for i in range(3):
         except Exception as msg:
             print(msg)
             reset = 0
-        
-        if reset == 0:
             reset_count += 1
-    reset_counts.append(reset_count)
+            
+    reset_counts.append(reset_count/10)
 print(averages)
 print(reset_counts)
